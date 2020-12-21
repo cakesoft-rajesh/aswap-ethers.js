@@ -49,7 +49,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var bytes_1 = require("@ethersproject/bytes");
+var bytes_1 = require("@alayanetwork/ethers-bytes");
 var properties_1 = require("@ethersproject/properties");
 var web_1 = require("@ethersproject/web");
 var logger_1 = require("@ethersproject/logger");

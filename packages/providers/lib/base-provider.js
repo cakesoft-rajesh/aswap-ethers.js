@@ -51,7 +51,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var abstract_provider_1 = require("@ethersproject/abstract-provider");
 var bignumber_1 = require("@ethersproject/bignumber");
-var bytes_1 = require("@ethersproject/bytes");
+var bytes_1 = require("@alayanetwork/ethers-bytes");
 var hash_1 = require("@ethersproject/hash");
 var networks_1 = require("@ethersproject/networks");
 var properties_1 = require("@ethersproject/properties");

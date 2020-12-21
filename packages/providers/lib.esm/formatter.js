@@ -1,7 +1,7 @@
 "use strict";
-import { getAddress, getContractAddress } from "@ethersproject/address";
+import { getAddress, getContractAddress } from "@alayanetwork/ethers-address";
 import { BigNumber } from "@ethersproject/bignumber";
-import { hexDataLength, hexDataSlice, hexValue, hexZeroPad, isHexString } from "@ethersproject/bytes";
+import { hexDataLength, hexDataSlice, hexValue, hexZeroPad, isHexString } from "@alayanetwork/ethers-bytes";
 import { AddressZero } from "@ethersproject/constants";
 import { shallowCopy } from "@ethersproject/properties";
 import { parse as parseTransaction } from "@ethersproject/transactions";

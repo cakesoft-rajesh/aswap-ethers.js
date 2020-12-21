@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var address_1 = require("@ethersproject/address");
+var address_1 = require("@alayanetwork/ethers-address");
 var bignumber_1 = require("@ethersproject/bignumber");
-var bytes_1 = require("@ethersproject/bytes");
+var bytes_1 = require("@alayanetwork/ethers-bytes");
 var constants_1 = require("@ethersproject/constants");
 var properties_1 = require("@ethersproject/properties");
 var transactions_1 = require("@ethersproject/transactions");

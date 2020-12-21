@@ -5,7 +5,7 @@
 import { Provider, TransactionRequest, TransactionResponse } from "@ethersproject/abstract-provider";
 import { Signer } from "@ethersproject/abstract-signer";
 import { BigNumber } from "@ethersproject/bignumber";
-import { Bytes, hexlify, hexValue } from "@ethersproject/bytes";
+import { Bytes, hexlify, hexValue } from "@alayanetwork/ethers-bytes";
 import { Network, Networkish } from "@ethersproject/networks";
 import { checkProperties, deepCopy, Deferrable, defineReadOnly, getStatic, resolveProperties, shallowCopy } from "@ethersproject/properties";
 import { toUtf8Bytes } from "@ethersproject/strings";
@@ -89,7 +89,7 @@ export class JsonRpcSigner extends Signer {
             return Promise.resolve(this._address);
         }
 
-        return this.provider.send("eth_accounts", []).then((accounts) => {
+        return this.provider.send("platon_accounts", []).then((accounts) => {
             if (accounts.length <= this._index) {
                 logger.throwError("unknown account #" + this._index, Logger.errors.UNSUPPORTED_OPERATION, {
                     operation: "getAddress"
@@ -107,7 +107,7 @@ export class JsonRpcSigner extends Signer {
             return address;
         });
 
-        // The JSON-RPC for eth_sendTransaction uses 90000 gas; if the user
+        // The JSON-RPC for platon_sendTransaction uses 90000 gas; if the user
         // wishes to use this, it is easy to specify explicitly, otherwise
         // we look it up for them.
         if (transaction.gasLimit == null) {
@@ -130,7 +130,7 @@ export class JsonRpcSigner extends Signer {
 
             const hexTx = (<any>this.provider.constructor).hexlifyTransaction(tx, { from: true });
 
-            return this.provider.send("eth_sendTransaction", [ hexTx ]).then((hash) => {
+            return this.provider.send("platon_sendTransaction", [ hexTx ]).then((hash) => {
                 return hash;
             }, (error) => {
                 if (error.responseText) {
@@ -180,8 +180,8 @@ export class JsonRpcSigner extends Signer {
         const data = ((typeof(message) === "string") ? toUtf8Bytes(message): message);
         return this.getAddress().then((address) => {
 
-            // https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sign
-            return this.provider.send("eth_sign", [ address.toLowerCase(), hexlify(data) ]);
+            // https://github.com/ethereum/wiki/wiki/JSON-RPC#platon_sign
+            return this.provider.send("platon_sign", [ address.toLowerCase(), hexlify(data) ]);
         });
     }
 
@@ -265,14 +265,11 @@ export class JsonRpcProvider extends BaseProvider {
         await timer(0);
 
         let chainId = null;
+        
         try {
-            chainId = await this.send("eth_chainId", [ ]);
-        } catch (error) {
-            try {
-                chainId = await this.send("net_version", [ ]);
-            } catch (error) { }
-        }
-
+            chainId = await this.send("net_version", [ ]);
+        } catch (error) { }
+        
         if (chainId != null) {
             const getNetwork = getStatic<(network: Networkish) => Network>(this.constructor, "getNetwork");
             try {
@@ -300,7 +297,7 @@ export class JsonRpcProvider extends BaseProvider {
     }
 
     listAccounts(): Promise<Array<string>> {
-        return this.send("eth_accounts", []).then((accounts: Array<string>) => {
+        return this.send("platon_accounts", []).then((accounts: Array<string>) => {
             return accounts.map((a) => this.formatter.address(a));
         });
     }
@@ -344,55 +341,55 @@ export class JsonRpcProvider extends BaseProvider {
     prepareRequest(method: string, params: any): [ string, Array<any> ] {
         switch (method) {
             case "getBlockNumber":
-                return [ "eth_blockNumber", [] ];
+                return [ "platon_blockNumber", [] ];
 
             case "getGasPrice":
-                return [ "eth_gasPrice", [] ];
+                return [ "platon_gasPrice", [] ];
 
             case "getBalance":
-                return [ "eth_getBalance", [ getLowerCase(params.address), params.blockTag ] ];
+                return [ "platon_getBalance", [ getLowerCase(params.address), params.blockTag ] ];
 
             case "getTransactionCount":
-                return [ "eth_getTransactionCount", [ getLowerCase(params.address), params.blockTag ] ];
+                return [ "platon_getTransactionCount", [ getLowerCase(params.address), params.blockTag ] ];
 
             case "getCode":
-                return [ "eth_getCode", [ getLowerCase(params.address), params.blockTag ] ];
+                return [ "platon_getCode", [ getLowerCase(params.address), params.blockTag ] ];
 
             case "getStorageAt":
-                return [ "eth_getStorageAt", [ getLowerCase(params.address), params.position, params.blockTag ] ];
+                return [ "platon_getStorageAt", [ getLowerCase(params.address), params.position, params.blockTag ] ];
 
             case "sendTransaction":
-                return [ "eth_sendRawTransaction", [ params.signedTransaction ] ]
+                return [ "platon_sendRawTransaction", [ params.signedTransaction ] ]
 
             case "getBlock":
                 if (params.blockTag) {
-                    return [ "eth_getBlockByNumber", [ params.blockTag, !!params.includeTransactions ] ];
+                    return [ "platon_getBlockByNumber", [ params.blockTag, !!params.includeTransactions ] ];
                 } else if (params.blockHash) {
-                    return [ "eth_getBlockByHash", [ params.blockHash, !!params.includeTransactions ] ];
+                    return [ "platon_getBlockByHash", [ params.blockHash, !!params.includeTransactions ] ];
                 }
                 return null;
 
             case "getTransaction":
-                return [ "eth_getTransactionByHash", [ params.transactionHash ] ];
+                return [ "platon_getTransactionByHash", [ params.transactionHash ] ];
 
             case "getTransactionReceipt":
-                return [ "eth_getTransactionReceipt", [ params.transactionHash ] ];
+                return [ "platon_getTransactionReceipt", [ params.transactionHash ] ];
 
             case "call": {
                 const hexlifyTransaction = getStatic<(t: TransactionRequest, a?: { [key: string]: boolean }) => { [key: string]: string }>(this.constructor, "hexlifyTransaction");
-                return [ "eth_call", [ hexlifyTransaction(params.transaction, { from: true }), params.blockTag ] ];
+                return [ "platon_call", [ hexlifyTransaction(params.transaction, { from: true }), params.blockTag ] ];
             }
 
             case "estimateGas": {
                 const hexlifyTransaction = getStatic<(t: TransactionRequest, a?: { [key: string]: boolean }) => { [key: string]: string }>(this.constructor, "hexlifyTransaction");
-                return [ "eth_estimateGas", [ hexlifyTransaction(params.transaction, { from: true }) ] ];
+                return [ "platon_estimateGas", [ hexlifyTransaction(params.transaction, { from: true }) ] ];
             }
 
             case "getLogs":
                 if (params.filter && params.filter.address != null) {
                     params.filter.address = getLowerCase(params.filter.address);
                 }
-                return [ "eth_getLogs", [ params.filter ] ];
+                return [ "platon_getLogs", [ params.filter ] ];
 
             default:
                 break;
@@ -441,12 +438,12 @@ export class JsonRpcProvider extends BaseProvider {
         if (this._pendingFilter != null) { return; }
         const self = this;
 
-        const pendingFilter: Promise<number> = this.send("eth_newPendingTransactionFilter", []);
+        const pendingFilter: Promise<number> = this.send("platon_newPendingTransactionFilter", []);
         this._pendingFilter = pendingFilter;
 
         pendingFilter.then(function(filterId) {
             function poll() {
-                self.send("eth_getFilterChanges", [ filterId ]).then(function(hashes: Array<string>) {
+                self.send("platon_getFilterChanges", [ filterId ]).then(function(hashes: Array<string>) {
                     if (self._pendingFilter != pendingFilter) { return null; }
 
                     let seq = Promise.resolve();
@@ -466,7 +463,7 @@ export class JsonRpcProvider extends BaseProvider {
                     });
                 }).then(function() {
                     if (self._pendingFilter != pendingFilter) {
-                        self.send("eth_uninstallFilter", [ filterId ]);
+                        self.send("platon_uninstallFilter", [ filterId ]);
                         return;
                     }
                     setTimeout(function() { poll(); }, 0);
@@ -519,6 +516,10 @@ export class JsonRpcProvider extends BaseProvider {
 
         ["from", "to", "data"].forEach(function(key) {
             if ((<any>transaction)[key] == null) { return; }
+            if (key === "to" || key === "from") {
+                result[key] = transaction[key];
+                return
+            }
             result[key] = hexlify((<any>transaction)[key]);
         });
 
