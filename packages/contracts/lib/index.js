@@ -56,10 +56,10 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
     return r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var abi_1 = require("@ethersproject/abi");
+var abi_1 = require("@alayanetwork/ethers-abi");
 var abstract_provider_1 = require("@ethersproject/abstract-provider");
 var abstract_signer_1 = require("@ethersproject/abstract-signer");
-var address_1 = require("@ethersproject/address");
+var address_1 = require("@alayanetwork/ethers-address");
 var bignumber_1 = require("@ethersproject/bignumber");
 var bytes_1 = require("@ethersproject/bytes");
 //import { AddressZero } from "@ethersproject/constants";

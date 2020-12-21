@@ -1,32 +1,31 @@
 {
   "author": "Richard Moore <me@ricmoo.com>",
   "dependencies": {
-    "@ethersproject/abi": "^5.0.0",
     "@ethersproject/abstract-provider": "^5.0.0",
     "@ethersproject/abstract-signer": "^5.0.0",
-    "@ethersproject/address": "^5.0.0",
     "@ethersproject/bignumber": "^5.0.0",
     "@ethersproject/bytes": "^5.0.0",
     "@ethersproject/constants": "^5.0.0",
     "@ethersproject/logger": "^5.0.0",
-    "@ethersproject/properties": "^5.0.0"
+    "@ethersproject/properties": "^5.0.0",
+    "@alayanetwork/ethers-abi": "^5.0.1",
+    "@alayanetwork/ethers-address": "^5.0.0"
   },
   "description": "Contract abstraction meta-class for ethers.",
   "ethereum": "donations.ethers.eth",
   "keywords": [
-    "Ethereum",
-    "ethers"
+    "Alaya"
   ],
   "license": "MIT",
   "main": "./lib/index.js",
   "module": "./lib.esm/index.js",
-  "name": "@ethersproject/contracts",
+  "name": "@alayanetwork/ethers-contracts",
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/ethers-io/ethers.js.git"
+    "url": "git://github.com/AlayaNetwork/aswap-ethers.js.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

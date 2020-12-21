@@ -1,9 +1,9 @@
 "use strict";
 
-import { checkResultErrors, EventFragment, Fragment, FunctionFragment, Indexed, Interface, JsonFragment, LogDescription, ParamType, Result } from "@ethersproject/abi";
+import { checkResultErrors, EventFragment, Fragment, FunctionFragment, Indexed, Interface, JsonFragment, LogDescription, ParamType, Result } from "@alayanetwork/ethers-abi";
 import { Block, BlockTag, Filter, FilterByBlockHash, Listener, Log, Provider, TransactionReceipt, TransactionRequest, TransactionResponse } from "@ethersproject/abstract-provider";
 import { Signer, VoidSigner } from "@ethersproject/abstract-signer";
-import { getAddress, getContractAddress } from "@ethersproject/address";
+import { getAddress, getContractAddress } from "@alayanetwork/ethers-address";
 import { BigNumber, BigNumberish } from "@ethersproject/bignumber";
 import { BytesLike, concat, hexlify, isBytes, isHexString } from "@ethersproject/bytes";
 //import { AddressZero } from "@ethersproject/constants";
