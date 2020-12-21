@@ -2,7 +2,7 @@
 
 // See: https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI
 
-import { arrayify, BytesLike } from "@ethersproject/bytes";
+import { arrayify, BytesLike } from "@alayanetwork/ethers-bytes";
 import { defineReadOnly } from "@ethersproject/properties";
 
 import { Logger } from "@ethersproject/logger";

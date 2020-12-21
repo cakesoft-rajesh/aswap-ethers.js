@@ -1,8 +1,8 @@
 "use strict";
 
-import { getAddress } from "@ethersproject/address";
+import { getAddress } from "@alayanetwork/ethers-address";
 import { BigNumber, BigNumberish } from "@ethersproject/bignumber";
-import { arrayify, BytesLike, concat, hexDataSlice, hexlify, hexZeroPad, isHexString } from "@ethersproject/bytes";
+import { arrayify, BytesLike, concat, hexDataSlice, hexlify, hexZeroPad, isHexString } from "@alayanetwork/ethers-bytes";
 import { id } from "@ethersproject/hash";
 import { keccak256 } from "@ethersproject/keccak256"
 import { defineReadOnly, Description, getStatic } from "@ethersproject/properties";

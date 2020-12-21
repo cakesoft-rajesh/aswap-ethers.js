@@ -1,32 +1,33 @@
 {
   "author": "Richard Moore <me@ricmoo.com>",
   "dependencies": {
-    "@ethersproject/address": "^5.0.0",
+    "@alayanetwork/web3-utils": "^0.13.2",
     "@ethersproject/bignumber": "^5.0.0",
-    "@ethersproject/bytes": "^5.0.0",
     "@ethersproject/constants": "^5.0.0",
     "@ethersproject/hash": "^5.0.0",
     "@ethersproject/keccak256": "^5.0.0",
     "@ethersproject/logger": "^5.0.0",
     "@ethersproject/properties": "^5.0.0",
-    "@ethersproject/strings": "^5.0.0"
+    "@ethersproject/strings": "^5.0.0",
+    "@alayanetwork/ethers-address": "^5.0.0",
+    "@alayanetwork/ethers-bytes": "^5.0.0"
   },
   "description": "Utilities and Classes for parsing, formatting and managing Ethereum ABIs.",
   "ethereum": "donations.ethers.eth",
   "keywords": [
-    "Ethereum",
+    "Alaya",
     "ethers"
   ],
   "license": "MIT",
   "main": "./lib/index.js",
   "module": "./lib.esm/index.js",
-  "name": "@ethersproject/abi",
+  "name": "@alayanetwork/ethers-abi",
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/ethers-io/ethers.js.git"
+    "url": "git://github.com/AlayaNetwork/aswap-ethers.js.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
