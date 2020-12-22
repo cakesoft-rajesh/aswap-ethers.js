@@ -1,8 +1,8 @@
 "use strict";
 import { getAddress } from "@alayanetwork/ethers-address";
 import { hexZeroPad } from "@alayanetwork/ethers-bytes";
+import { isBech32Address, decodeBech32Address } from "@alayanetwork/web3-utils";
 import { Coder } from "./abstract-coder";
-import {isBech32Address, decodeBech32Address} from "@alayanetwork/web3-utils";
 export class AddressCoder extends Coder {
     constructor(localName) {
         super("address", "address", localName, false);

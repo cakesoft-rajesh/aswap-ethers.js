@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 // See: https://github.com/ethereum/wiki/wiki/Ethereum-Contract-ABI
-var bytes_1 = require("@alayanetwork/ethers-bytes");
+var ethers_bytes_1 = require("@alayanetwork/ethers-bytes");
 var properties_1 = require("@ethersproject/properties");
 var logger_1 = require("@ethersproject/logger");
 var _version_1 = require("./_version");
@@ -10,7 +10,7 @@ var abstract_coder_1 = require("./coders/abstract-coder");
 var address_1 = require("./coders/address");
 var array_1 = require("./coders/array");
 var boolean_1 = require("./coders/boolean");
-var bytes_2 = require("./coders/bytes");
+var bytes_1 = require("./coders/bytes");
 var fixed_bytes_1 = require("./coders/fixed-bytes");
 var null_1 = require("./coders/null");
 var number_1 = require("./coders/number");
@@ -35,7 +35,7 @@ var AbiCoder = /** @class */ (function () {
             case "string":
                 return new string_1.StringCoder(param.name);
             case "bytes":
-                return new bytes_2.BytesCoder(param.name);
+                return new bytes_1.BytesCoder(param.name);
             case "array":
                 return new array_1.ArrayCoder(this._getCoder(param.arrayChildren), param.arrayLength, param.name);
             case "tuple":
@@ -90,7 +90,7 @@ var AbiCoder = /** @class */ (function () {
         var _this = this;
         var coders = types.map(function (type) { return _this._getCoder(fragments_1.ParamType.from(type)); });
         var coder = new tuple_1.TupleCoder(coders, "_");
-        return coder.decode(this._getReader(bytes_1.arrayify(data)));
+        return coder.decode(this._getReader(ethers_bytes_1.arrayify(data)));
     };
     return AbiCoder;
 }());

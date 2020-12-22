@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var bytes_1 = require("@alayanetwork/ethers-bytes");
+var ethers_bytes_1 = require("@alayanetwork/ethers-bytes");
 var bignumber_1 = require("@ethersproject/bignumber");
 var properties_1 = require("@ethersproject/properties");
 var logger_1 = require("@ethersproject/logger");
@@ -45,11 +45,11 @@ exports.Coder = Coder;
 var Writer = /** @class */ (function () {
     function Writer(wordSize) {
         properties_1.defineReadOnly(this, "wordSize", wordSize || 32);
-        this._data = bytes_1.arrayify([]);
+        this._data = ethers_bytes_1.arrayify([]);
         this._padding = new Uint8Array(wordSize);
     }
     Object.defineProperty(Writer.prototype, "data", {
-        get: function () { return bytes_1.hexlify(this._data); },
+        get: function () { return ethers_bytes_1.hexlify(this._data); },
         enumerable: true,
         configurable: true
     });
@@ -59,19 +59,19 @@ var Writer = /** @class */ (function () {
         configurable: true
     });
     Writer.prototype._writeData = function (data) {
-        this._data = bytes_1.concat([this._data, data]);
+        this._data = ethers_bytes_1.concat([this._data, data]);
         return data.length;
     };
     // Arrayish items; padded on the right to wordSize
     Writer.prototype.writeBytes = function (value) {
-        var bytes = bytes_1.arrayify(value);
+        var bytes = ethers_bytes_1.arrayify(value);
         if (bytes.length % this.wordSize) {
-            bytes = bytes_1.concat([bytes, this._padding.slice(bytes.length % this.wordSize)]);
+            bytes = ethers_bytes_1.concat([bytes, this._padding.slice(bytes.length % this.wordSize)]);
         }
         return this._writeData(bytes);
     };
     Writer.prototype._getValue = function (value) {
-        var bytes = bytes_1.arrayify(bignumber_1.BigNumber.from(value));
+        var bytes = ethers_bytes_1.arrayify(bignumber_1.BigNumber.from(value));
         if (bytes.length > this.wordSize) {
             logger.throwError("value out-of-bounds", logger_1.Logger.errors.BUFFER_OVERRUN, {
                 length: this.wordSize,
@@ -79,7 +79,7 @@ var Writer = /** @class */ (function () {
             });
         }
         if (bytes.length % this.wordSize) {
-            bytes = bytes_1.concat([this._padding.slice(bytes.length % this.wordSize), bytes]);
+            bytes = ethers_bytes_1.concat([this._padding.slice(bytes.length % this.wordSize), bytes]);
         }
         return bytes;
     };
@@ -100,13 +100,13 @@ var Writer = /** @class */ (function () {
 exports.Writer = Writer;
 var Reader = /** @class */ (function () {
     function Reader(data, wordSize, coerceFunc) {
-        properties_1.defineReadOnly(this, "_data", bytes_1.arrayify(data));
+        properties_1.defineReadOnly(this, "_data", ethers_bytes_1.arrayify(data));
         properties_1.defineReadOnly(this, "wordSize", wordSize || 32);
         properties_1.defineReadOnly(this, "_coerceFunc", coerceFunc);
         this._offset = 0;
     }
     Object.defineProperty(Reader.prototype, "data", {
-        get: function () { return bytes_1.hexlify(this._data); },
+        get: function () { return ethers_bytes_1.hexlify(this._data); },
         enumerable: true,
         configurable: true
     });

@@ -13,7 +13,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var bytes_1 = require("@alayanetwork/ethers-bytes");
+var ethers_bytes_1 = require("@alayanetwork/ethers-bytes");
 var abstract_coder_1 = require("./abstract-coder");
 // @TODO: Merge this with bytes
 var FixedBytesCoder = /** @class */ (function (_super) {
@@ -26,14 +26,14 @@ var FixedBytesCoder = /** @class */ (function (_super) {
         return _this;
     }
     FixedBytesCoder.prototype.encode = function (writer, value) {
-        var data = bytes_1.arrayify(value);
+        var data = ethers_bytes_1.arrayify(value);
         if (data.length !== this.size) {
             this._throwError("incorrect data length", value);
         }
         return writer.writeBytes(data);
     };
     FixedBytesCoder.prototype.decode = function (reader) {
-        return reader.coerce(this.name, bytes_1.hexlify(reader.readBytes(this.size)));
+        return reader.coerce(this.name, ethers_bytes_1.hexlify(reader.readBytes(this.size)));
     };
     return FixedBytesCoder;
 }(abstract_coder_1.Coder));

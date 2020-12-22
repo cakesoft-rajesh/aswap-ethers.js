@@ -13,9 +13,9 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var address_1 = require("@alayanetwork/ethers-address");
+var ethers_address_1 = require("@alayanetwork/ethers-address");
 var bignumber_1 = require("@ethersproject/bignumber");
-var bytes_1 = require("@alayanetwork/ethers-bytes");
+var ethers_bytes_1 = require("@alayanetwork/ethers-bytes");
 var hash_1 = require("@ethersproject/hash");
 var keccak256_1 = require("@ethersproject/keccak256");
 var properties_1 = require("@ethersproject/properties");
@@ -150,17 +150,17 @@ var Interface = /** @class */ (function () {
         return abi_coder_1.defaultAbiCoder;
     };
     Interface.getAddress = function (address) {
-        return address_1.getAddress(address);
+        return ethers_address_1.getAddress(address);
     };
     Interface.getSighash = function (functionFragment) {
-        return bytes_1.hexDataSlice(hash_1.id(functionFragment.format()), 0, 4);
+        return ethers_bytes_1.hexDataSlice(hash_1.id(functionFragment.format()), 0, 4);
     };
     Interface.getEventTopic = function (eventFragment) {
         return hash_1.id(eventFragment.format());
     };
     // Find a function definition by any means necessary (unless it is ambiguous)
     Interface.prototype.getFunction = function (nameOrSignatureOrSighash) {
-        if (bytes_1.isHexString(nameOrSignatureOrSighash)) {
+        if (ethers_bytes_1.isHexString(nameOrSignatureOrSighash)) {
             for (var name_1 in this.functions) {
                 if (nameOrSignatureOrSighash === this.getSighash(name_1)) {
                     return this.functions[name_1];
@@ -189,7 +189,7 @@ var Interface = /** @class */ (function () {
     };
     // Find an event definition by any means necessary (unless it is ambiguous)
     Interface.prototype.getEvent = function (nameOrSignatureOrTopic) {
-        if (bytes_1.isHexString(nameOrSignatureOrTopic)) {
+        if (ethers_bytes_1.isHexString(nameOrSignatureOrTopic)) {
             var topichash = nameOrSignatureOrTopic.toLowerCase();
             for (var name_3 in this.events) {
                 if (topichash === this.getEventTopic(name_3)) {
@@ -245,9 +245,9 @@ var Interface = /** @class */ (function () {
         if (typeof (functionFragment) === "string") {
             functionFragment = this.getFunction(functionFragment);
         }
-        var bytes = bytes_1.arrayify(data);
-        if (bytes_1.hexlify(bytes.slice(0, 4)) !== this.getSighash(functionFragment)) {
-            logger.throwArgumentError("data signature does not match function " + functionFragment.name + ".", "data", bytes_1.hexlify(bytes));
+        var bytes = ethers_bytes_1.arrayify(data);
+        if (ethers_bytes_1.hexlify(bytes.slice(0, 4)) !== this.getSighash(functionFragment)) {
+            logger.throwArgumentError("data signature does not match function " + functionFragment.name + ".", "data", ethers_bytes_1.hexlify(bytes));
         }
         return this._decodeParams(functionFragment.inputs, bytes.slice(4));
     };
@@ -256,7 +256,7 @@ var Interface = /** @class */ (function () {
         if (typeof (functionFragment) === "string") {
             functionFragment = this.getFunction(functionFragment);
         }
-        return bytes_1.hexlify(bytes_1.concat([
+        return ethers_bytes_1.hexlify(ethers_bytes_1.concat([
             this.getSighash(functionFragment),
             this._encodeParams(functionFragment.inputs, values || [])
         ]));
@@ -266,7 +266,7 @@ var Interface = /** @class */ (function () {
         if (typeof (functionFragment) === "string") {
             functionFragment = this.getFunction(functionFragment);
         }
-        var bytes = bytes_1.arrayify(data);
+        var bytes = ethers_bytes_1.arrayify(data);
         var reason = null;
         var errorSignature = null;
         switch (bytes.length % this._abiCoder._getWordSize()) {
@@ -277,7 +277,7 @@ var Interface = /** @class */ (function () {
                 catch (error) { }
                 break;
             case 4:
-                if (bytes_1.hexlify(bytes.slice(0, 4)) === "0x08c379a0") {
+                if (ethers_bytes_1.hexlify(bytes.slice(0, 4)) === "0x08c379a0") {
                     errorSignature = "Error(string)";
                     reason = this._abiCoder.decode(["string"], bytes.slice(4))[0];
                 }
@@ -295,7 +295,7 @@ var Interface = /** @class */ (function () {
         if (typeof (functionFragment) === "string") {
             functionFragment = this.getFunction(functionFragment);
         }
-        return bytes_1.hexlify(this._abiCoder.encode(functionFragment.outputs, values || []));
+        return ethers_bytes_1.hexlify(this._abiCoder.encode(functionFragment.outputs, values || []));
     };
     // Create the filter for the event with search criteria (e.g. for eth_filterLog)
     Interface.prototype.encodeFilterTopics = function (eventFragment, values) {
@@ -318,13 +318,13 @@ var Interface = /** @class */ (function () {
                 return hash_1.id(value);
             }
             else if (param.type === "bytes") {
-                return keccak256_1.keccak256(bytes_1.hexlify(value));
+                return keccak256_1.keccak256(ethers_bytes_1.hexlify(value));
             }
             // Check addresses are valid
             if (param.type === "address") {
                 _this._abiCoder.encode(["address"], [value]);
             }
-            return bytes_1.hexZeroPad(bytes_1.hexlify(value), 32);
+            return ethers_bytes_1.hexZeroPad(ethers_bytes_1.hexlify(value), 32);
         };
         values.forEach(function (value, index) {
             var param = eventFragment.inputs[index];
@@ -401,7 +401,7 @@ var Interface = /** @class */ (function () {
         }
         if (topics != null && !eventFragment.anonymous) {
             var topicHash = this.getEventTopic(eventFragment);
-            if (!bytes_1.isHexString(topics[0], 32) || topics[0].toLowerCase() !== topicHash) {
+            if (!ethers_bytes_1.isHexString(topics[0], 32) || topics[0].toLowerCase() !== topicHash) {
                 logger.throwError("fragment/topic mismatch", logger_1.Logger.errors.INVALID_ARGUMENT, { argument: "topics[0]", expected: topicHash, value: topics[0] });
             }
             topics = topics.slice(1);
@@ -425,7 +425,7 @@ var Interface = /** @class */ (function () {
                 dynamic.push(false);
             }
         });
-        var resultIndexed = (topics != null) ? this._abiCoder.decode(indexed, bytes_1.concat(topics)) : null;
+        var resultIndexed = (topics != null) ? this._abiCoder.decode(indexed, ethers_bytes_1.concat(topics)) : null;
         var resultNonIndexed = this._abiCoder.decode(nonIndexed, data);
         var result = [];
         var nonIndexedIndex = 0, indexedIndex = 0;

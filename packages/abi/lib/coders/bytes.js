@@ -13,7 +13,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var bytes_1 = require("@alayanetwork/ethers-bytes");
+var ethers_bytes_1 = require("@alayanetwork/ethers-bytes");
 var abstract_coder_1 = require("./abstract-coder");
 var DynamicBytesCoder = /** @class */ (function (_super) {
     __extends(DynamicBytesCoder, _super);
@@ -21,7 +21,7 @@ var DynamicBytesCoder = /** @class */ (function (_super) {
         return _super.call(this, type, type, localName, true) || this;
     }
     DynamicBytesCoder.prototype.encode = function (writer, value) {
-        value = bytes_1.arrayify(value);
+        value = ethers_bytes_1.arrayify(value);
         var length = writer.writeValue(value.length);
         length += writer.writeBytes(value);
         return length;
@@ -38,7 +38,7 @@ var BytesCoder = /** @class */ (function (_super) {
         return _super.call(this, "bytes", localName) || this;
     }
     BytesCoder.prototype.decode = function (reader) {
-        return reader.coerce(this.name, bytes_1.hexlify(_super.prototype.decode.call(this, reader)));
+        return reader.coerce(this.name, ethers_bytes_1.hexlify(_super.prototype.decode.call(this, reader)));
     };
     return BytesCoder;
 }(DynamicBytesCoder));

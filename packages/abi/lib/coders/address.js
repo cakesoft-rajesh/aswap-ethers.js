@@ -13,8 +13,9 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-var address_1 = require("@alayanetwork/ethers-address");
-var bytes_1 = require("@alayanetwork/ethers-bytes");
+var ethers_address_1 = require("@alayanetwork/ethers-address");
+var ethers_bytes_1 = require("@alayanetwork/ethers-bytes");
+var web3_utils_1 = require("@alayanetwork/web3-utils");
 var abstract_coder_1 = require("./abstract-coder");
 var AddressCoder = /** @class */ (function (_super) {
     __extends(AddressCoder, _super);
@@ -23,15 +24,18 @@ var AddressCoder = /** @class */ (function (_super) {
     }
     AddressCoder.prototype.encode = function (writer, value) {
         try {
-            address_1.getAddress(value);
+            ethers_address_1.getAddress(value);
         }
         catch (error) {
             this._throwError(error.message, value);
         }
+        if (web3_utils_1.isBech32Address(value)) {
+            value = web3_utils_1.decodeBech32Address(value);
+        }
         return writer.writeValue(value);
     };
     AddressCoder.prototype.decode = function (reader) {
-        return address_1.getAddress(bytes_1.hexZeroPad(reader.readValue().toHexString(), 20));
+        return ethers_address_1.getAddress(ethers_bytes_1.hexZeroPad(reader.readValue().toHexString(), 20));
     };
     return AddressCoder;
 }(abstract_coder_1.Coder));
