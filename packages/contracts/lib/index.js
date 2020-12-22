@@ -56,10 +56,10 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
     return r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var abi_1 = require("@alayanetwork/ethers-abi");
+var ethers_abi_1 = require("@alayanetwork/ethers-abi");
 var abstract_provider_1 = require("@ethersproject/abstract-provider");
 var abstract_signer_1 = require("@ethersproject/abstract-signer");
-var address_1 = require("@alayanetwork/ethers-address");
+var ethers_address_1 = require("@alayanetwork/ethers-address");
 var bignumber_1 = require("@ethersproject/bignumber");
 var bytes_1 = require("@ethersproject/bytes");
 //import { AddressZero } from "@ethersproject/constants";
@@ -84,7 +84,7 @@ function resolveName(resolver, nameOrPromise) {
                     name = _a.sent();
                     // If it is already an address, just use it (after adding checksum)
                     try {
-                        return [2 /*return*/, address_1.getAddress(name)];
+                        return [2 /*return*/, ethers_address_1.getAddress(name)];
                     }
                     catch (error) { }
                     if (!resolver) {
@@ -142,7 +142,7 @@ function populateTransaction(contract, fragment, args) {
                                 signer: contract.signer.getAddress()
                             }).then(function (check) { return __awaiter(_this, void 0, void 0, function () {
                                 return __generator(this, function (_a) {
-                                    if (address_1.getAddress(check.signer) !== check.override) {
+                                    if (ethers_address_1.getAddress(check.signer) !== check.override) {
                                         logger.throwError("Contract with a Signer cannot override from", logger_1.Logger.errors.UNSUPPORTED_OPERATION, {
                                             operation: "overrides.from"
                                         });
@@ -504,7 +504,7 @@ var FragmentRunningEvent = /** @class */ (function (_super) {
         }
     };
     FragmentRunningEvent.prototype.getEmit = function (event) {
-        var errors = abi_1.checkResultErrors(event.args);
+        var errors = ethers_abi_1.checkResultErrors(event.args);
         if (errors.length) {
             throw errors[0].error;
         }
@@ -618,7 +618,7 @@ var Contract = /** @class */ (function () {
         }
         else {
             try {
-                properties_1.defineReadOnly(this, "resolvedAddress", Promise.resolve(address_1.getAddress(addressOrName)));
+                properties_1.defineReadOnly(this, "resolvedAddress", Promise.resolve(ethers_address_1.getAddress(addressOrName)));
             }
             catch (error) {
                 // Without a provider, we cannot use ENS names
@@ -691,13 +691,13 @@ var Contract = /** @class */ (function () {
         });
     }
     Contract.getContractAddress = function (transaction) {
-        return address_1.getContractAddress(transaction);
+        return ethers_address_1.getContractAddress(transaction);
     };
     Contract.getInterface = function (contractInterface) {
-        if (abi_1.Interface.isInterface(contractInterface)) {
+        if (ethers_abi_1.Interface.isInterface(contractInterface)) {
             return contractInterface;
         }
-        return new abi_1.Interface(contractInterface);
+        return new ethers_abi_1.Interface(contractInterface);
     };
     // @TODO: Allow timeout?
     Contract.prototype.deployed = function () {
@@ -766,7 +766,7 @@ var Contract = /** @class */ (function () {
         return new (this.constructor)(addressOrName, this.interface, this.signer || this.provider);
     };
     Contract.isIndexed = function (value) {
-        return abi_1.Indexed.isIndexed(value);
+        return ethers_abi_1.Indexed.isIndexed(value);
     };
     Contract.prototype._normalizeRunningEvent = function (runningEvent) {
         // Already have an instance of this event running; we can re-use it
@@ -1103,7 +1103,7 @@ var ContractFactory = /** @class */ (function () {
         return Contract.getInterface(contractInterface);
     };
     ContractFactory.getContractAddress = function (tx) {
-        return address_1.getContractAddress(tx);
+        return ethers_address_1.getContractAddress(tx);
     };
     ContractFactory.getContract = function (address, contractInterface, signer) {
         return new Contract(address, contractInterface, signer);
