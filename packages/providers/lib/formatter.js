@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var address_1 = require("@alayanetwork/ethers-address");
+var ethers_address_1 = require("@alayanetwork/ethers-address");
 var bignumber_1 = require("@ethersproject/bignumber");
-var bytes_1 = require("@alayanetwork/ethers-bytes");
+var ethers_bytes_1 = require("@alayanetwork/ethers-bytes");
 var constants_1 = require("@ethersproject/constants");
 var properties_1 = require("@ethersproject/properties");
 var transactions_1 = require("@ethersproject/transactions");
@@ -145,7 +145,7 @@ var Formatter = /** @class */ (function () {
             if (!strict && value.substring(0, 2) !== "0x") {
                 value = "0x" + value;
             }
-            if (bytes_1.isHexString(value)) {
+            if (ethers_bytes_1.isHexString(value)) {
                 return value.toLowerCase();
             }
         }
@@ -161,17 +161,17 @@ var Formatter = /** @class */ (function () {
     // Requires an address
     // Strict! Used on input.
     Formatter.prototype.address = function (value) {
-        return address_1.getAddress(value);
+        return ethers_address_1.getAddress(value);
     };
     Formatter.prototype.callAddress = function (value) {
-        if (!bytes_1.isHexString(value, 32)) {
+        if (!ethers_bytes_1.isHexString(value, 32)) {
             return null;
         }
-        var address = address_1.getAddress(bytes_1.hexDataSlice(value, 12));
+        var address = ethers_address_1.getAddress(ethers_bytes_1.hexDataSlice(value, 12));
         return (address === constants_1.AddressZero) ? null : address;
     };
     Formatter.prototype.contractAddress = function (value) {
-        return address_1.getContractAddress(value);
+        return ethers_address_1.getContractAddress(value);
     };
     // Strict! Used on input.
     Formatter.prototype.blockTag = function (blockTag) {
@@ -184,15 +184,15 @@ var Formatter = /** @class */ (function () {
         if (blockTag === "latest" || blockTag === "pending") {
             return blockTag;
         }
-        if (typeof (blockTag) === "number" || bytes_1.isHexString(blockTag)) {
-            return bytes_1.hexValue(blockTag);
+        if (typeof (blockTag) === "number" || ethers_bytes_1.isHexString(blockTag)) {
+            return ethers_bytes_1.hexValue(blockTag);
         }
         throw new Error("invalid blockTag");
     };
     // Requires a hash, optionally requires 0x prefix; returns prefixed lowercase hash.
     Formatter.prototype.hash = function (value, strict) {
         var result = this.hex(value, strict);
-        if (bytes_1.hexDataLength(result) !== 32) {
+        if (ethers_bytes_1.hexDataLength(result) !== 32) {
             return logger.throwArgumentError("invalid hash", "value", value);
         }
         return result;
@@ -210,10 +210,10 @@ var Formatter = /** @class */ (function () {
         return null;
     };
     Formatter.prototype.uint256 = function (value) {
-        if (!bytes_1.isHexString(value)) {
+        if (!ethers_bytes_1.isHexString(value)) {
             throw new Error("invalid uint256");
         }
-        return bytes_1.hexZeroPad(value, 32);
+        return ethers_bytes_1.hexZeroPad(value, 32);
     };
     Formatter.prototype._block = function (value, format) {
         if (value.author != null && value.miner == null) {
@@ -274,7 +274,7 @@ var Formatter = /** @class */ (function () {
         var result = Formatter.check(this.formats.transaction, transaction);
         if (transaction.chainId != null) {
             var chainId = transaction.chainId;
-            if (bytes_1.isHexString(chainId)) {
+            if (ethers_bytes_1.isHexString(chainId)) {
                 chainId = bignumber_1.BigNumber.from(chainId).toNumber();
             }
             result.chainId = chainId;
@@ -285,7 +285,7 @@ var Formatter = /** @class */ (function () {
             if (chainId == null && result.v == null) {
                 chainId = transaction.chainId;
             }
-            if (bytes_1.isHexString(chainId)) {
+            if (ethers_bytes_1.isHexString(chainId)) {
                 chainId = bignumber_1.BigNumber.from(chainId).toNumber();
             }
             if (typeof (chainId) !== "number" && result.v != null) {

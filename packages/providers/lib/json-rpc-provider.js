@@ -51,7 +51,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var abstract_signer_1 = require("@ethersproject/abstract-signer");
 var bignumber_1 = require("@ethersproject/bignumber");
-var bytes_1 = require("@alayanetwork/ethers-bytes");
+var ethers_bytes_1 = require("@alayanetwork/ethers-bytes");
 var properties_1 = require("@ethersproject/properties");
 var strings_1 = require("@ethersproject/strings");
 var web_1 = require("@ethersproject/web");
@@ -212,7 +212,7 @@ var JsonRpcSigner = /** @class */ (function (_super) {
         var data = ((typeof (message) === "string") ? strings_1.toUtf8Bytes(message) : message);
         return this.getAddress().then(function (address) {
             // https://github.com/ethereum/wiki/wiki/JSON-RPC#platon_sign
-            return _this.provider.send("platon_sign", [address.toLowerCase(), bytes_1.hexlify(data)]);
+            return _this.provider.send("platon_sign", [address.toLowerCase(), ethers_bytes_1.hexlify(data)]);
         });
     };
     JsonRpcSigner.prototype.unlock = function (password) {
@@ -291,7 +291,7 @@ var JsonRpcProvider = /** @class */ (function (_super) {
     };
     JsonRpcProvider.prototype.detectNetwork = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var chainId, error_1, error_2, getNetwork;
+            var chainId, error_1, getNetwork;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, timer(0)];
@@ -300,25 +300,15 @@ var JsonRpcProvider = /** @class */ (function (_super) {
                         chainId = null;
                         _a.label = 2;
                     case 2:
-                        _a.trys.push([2, 4, , 9]);
-                        return [4 /*yield*/, this.send("platon_chainId", [])];
+                        _a.trys.push([2, 4, , 5]);
+                        return [4 /*yield*/, this.send("net_version", [])];
                     case 3:
                         chainId = _a.sent();
-                        return [3 /*break*/, 9];
+                        return [3 /*break*/, 5];
                     case 4:
                         error_1 = _a.sent();
-                        _a.label = 5;
+                        return [3 /*break*/, 5];
                     case 5:
-                        _a.trys.push([5, 7, , 8]);
-                        return [4 /*yield*/, this.send("net_version", [])];
-                    case 6:
-                        chainId = _a.sent();
-                        return [3 /*break*/, 8];
-                    case 7:
-                        error_2 = _a.sent();
-                        return [3 /*break*/, 8];
-                    case 8: return [3 /*break*/, 9];
-                    case 9:
                         if (chainId != null) {
                             getNetwork = properties_1.getStatic(this.constructor, "getNetwork");
                             try {
@@ -533,7 +523,7 @@ var JsonRpcProvider = /** @class */ (function (_super) {
             if (transaction[key] == null) {
                 return;
             }
-            var value = bytes_1.hexValue(transaction[key]);
+            var value = ethers_bytes_1.hexValue(transaction[key]);
             if (key === "gasLimit") {
                 key = "gas";
             }
@@ -543,7 +533,11 @@ var JsonRpcProvider = /** @class */ (function (_super) {
             if (transaction[key] == null) {
                 return;
             }
-            result[key] = bytes_1.hexlify(transaction[key]);
+            if (key === "to" || key === "from") {
+                result[key] = transaction[key];
+                return;
+            }
+            result[key] = ethers_bytes_1.hexlify(transaction[key]);
         });
         return result;
     };

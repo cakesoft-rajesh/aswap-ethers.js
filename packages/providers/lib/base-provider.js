@@ -51,7 +51,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var abstract_provider_1 = require("@ethersproject/abstract-provider");
 var bignumber_1 = require("@ethersproject/bignumber");
-var bytes_1 = require("@alayanetwork/ethers-bytes");
+var ethers_bytes_1 = require("@alayanetwork/ethers-bytes");
 var hash_1 = require("@ethersproject/hash");
 var networks_1 = require("@ethersproject/networks");
 var properties_1 = require("@ethersproject/properties");
@@ -67,7 +67,7 @@ function checkTopic(topic) {
     if (topic == null) {
         return "null";
     }
-    if (bytes_1.hexDataLength(topic) !== 32) {
+    if (ethers_bytes_1.hexDataLength(topic) !== 32) {
         logger.throwArgumentError("invalid topic", "topic", topic);
     }
     return topic.toLowerCase();
@@ -112,7 +112,7 @@ function deserializeTopics(data) {
 function getEventTag(eventName) {
     if (typeof (eventName) === "string") {
         eventName = eventName.toLowerCase();
-        if (bytes_1.hexDataLength(eventName) === 32) {
+        if (ethers_bytes_1.hexDataLength(eventName) === 32) {
             return "tx:" + eventName;
         }
         if (eventName.indexOf(":") === -1) {
@@ -802,7 +802,7 @@ var BaseProvider = /** @class */ (function (_super) {
                             })];
                     case 2:
                         params = _b.sent();
-                        _a = bytes_1.hexlify;
+                        _a = ethers_bytes_1.hexlify;
                         return [4 /*yield*/, this.perform("getCode", params)];
                     case 3: return [2 /*return*/, _a.apply(void 0, [_b.sent()])];
                 }
@@ -820,11 +820,11 @@ var BaseProvider = /** @class */ (function (_super) {
                         return [4 /*yield*/, properties_1.resolveProperties({
                                 address: this._getAddress(addressOrName),
                                 blockTag: this._getBlockTag(blockTag),
-                                position: Promise.resolve(position).then(function (p) { return bytes_1.hexValue(p); })
+                                position: Promise.resolve(position).then(function (p) { return ethers_bytes_1.hexValue(p); })
                             })];
                     case 2:
                         params = _b.sent();
-                        _a = bytes_1.hexlify;
+                        _a = ethers_bytes_1.hexlify;
                         return [4 /*yield*/, this.perform("getStorageAt", params)];
                     case 3: return [2 /*return*/, _a.apply(void 0, [_b.sent()])];
                 }
@@ -834,7 +834,7 @@ var BaseProvider = /** @class */ (function (_super) {
     // This should be called by any subclass wrapping a TransactionResponse
     BaseProvider.prototype._wrapTransaction = function (tx, hash) {
         var _this = this;
-        if (hash != null && bytes_1.hexDataLength(hash) !== 32) {
+        if (hash != null && ethers_bytes_1.hexDataLength(hash) !== 32) {
             throw new Error("invalid response - sendTransaction");
         }
         var result = tx;
@@ -883,7 +883,7 @@ var BaseProvider = /** @class */ (function (_super) {
                     case 0: return [4 /*yield*/, this.getNetwork()];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, Promise.resolve(signedTransaction).then(function (t) { return bytes_1.hexlify(t); })];
+                        return [4 /*yield*/, Promise.resolve(signedTransaction).then(function (t) { return ethers_bytes_1.hexlify(t); })];
                     case 2:
                         hexTx = _a.sent();
                         tx = this.formatter.transaction(signedTransaction);
@@ -930,7 +930,7 @@ var BaseProvider = /** @class */ (function (_super) {
                             if (values[key] == null) {
                                 return;
                             }
-                            tx[key] = Promise.resolve(values[key]).then(function (v) { return (v ? bytes_1.hexlify(v) : null); });
+                            tx[key] = Promise.resolve(values[key]).then(function (v) { return (v ? ethers_bytes_1.hexlify(v) : null); });
                         });
                         _b = (_a = this.formatter).transactionRequest;
                         return [4 /*yield*/, properties_1.resolveProperties(tx)];
@@ -985,7 +985,7 @@ var BaseProvider = /** @class */ (function (_super) {
                             })];
                     case 2:
                         params = _b.sent();
-                        _a = bytes_1.hexlify;
+                        _a = ethers_bytes_1.hexlify;
                         return [4 /*yield*/, this.perform("call", params)];
                     case 3: return [2 /*return*/, _a.apply(void 0, [_b.sent()])];
                 }
@@ -1046,7 +1046,7 @@ var BaseProvider = /** @class */ (function (_super) {
                         params = {
                             includeTransactions: !!includeTransactions
                         };
-                        if (!bytes_1.isHexString(blockHashOrBlockTag, 32)) return [3 /*break*/, 3];
+                        if (!ethers_bytes_1.isHexString(blockHashOrBlockTag, 32)) return [3 /*break*/, 3];
                         params.blockHash = blockHashOrBlockTag;
                         return [3 /*break*/, 6];
                     case 3:
@@ -1056,7 +1056,7 @@ var BaseProvider = /** @class */ (function (_super) {
                         return [4 /*yield*/, this._getBlockTag(blockHashOrBlockTag)];
                     case 4:
                         _a.blockTag = _c.apply(_b, [_d.sent()]);
-                        if (bytes_1.isHexString(params.blockTag)) {
+                        if (ethers_bytes_1.isHexString(params.blockTag)) {
                             blockNumber = parseInt(params.blockTag.substring(2), 16);
                         }
                         return [3 /*break*/, 6];
@@ -1332,7 +1332,7 @@ var BaseProvider = /** @class */ (function (_super) {
                         }
                         catch (error) {
                             // If is is a hexstring, the address is bad (See #694)
-                            if (bytes_1.isHexString(name)) {
+                            if (ethers_bytes_1.isHexString(name)) {
                                 throw error;
                             }
                         }
@@ -1372,7 +1372,7 @@ var BaseProvider = /** @class */ (function (_super) {
                         if (!resolverAddress) {
                             return [2 /*return*/, null];
                         }
-                        _a = bytes_1.arrayify;
+                        _a = ethers_bytes_1.arrayify;
                         return [4 /*yield*/, this.call({
                                 to: resolverAddress,
                                 data: ("0x691f3431" + hash_1.namehash(reverseName).substring(2))

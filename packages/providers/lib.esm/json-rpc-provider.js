@@ -232,14 +232,9 @@ export class JsonRpcProvider extends BaseProvider {
             yield timer(0);
             let chainId = null;
             try {
-                chainId = yield this.send("platon_chainId", []);
+                chainId = yield this.send("net_version", []);
             }
-            catch (error) {
-                try {
-                    chainId = yield this.send("net_version", []);
-                }
-                catch (error) { }
-            }
+            catch (error) { }
             if (chainId != null) {
                 const getNetwork = getStatic(this.constructor, "getNetwork");
                 try {
@@ -458,6 +453,10 @@ export class JsonRpcProvider extends BaseProvider {
         });
         ["from", "to", "data"].forEach(function (key) {
             if (transaction[key] == null) {
+                return;
+            }
+            if (key === "to" || key === "from") {
+                result[key] = transaction[key];
                 return;
             }
             result[key] = hexlify(transaction[key]);

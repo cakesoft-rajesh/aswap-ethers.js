@@ -51,7 +51,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var abstract_provider_1 = require("@ethersproject/abstract-provider");
 var bignumber_1 = require("@ethersproject/bignumber");
-var bytes_1 = require("@alayanetwork/ethers-bytes");
+var ethers_bytes_1 = require("@alayanetwork/ethers-bytes");
 var properties_1 = require("@ethersproject/properties");
 var random_1 = require("@ethersproject/random");
 var web_1 = require("@ethersproject/web");
@@ -354,28 +354,28 @@ function getRunner(config, currentBlockNumber, method, params) {
                     }
                     return [3 /*break*/, 19];
                 case 3:
-                    if (!(params.blockTag && bytes_1.isHexString(params.blockTag))) return [3 /*break*/, 5];
+                    if (!(params.blockTag && ethers_bytes_1.isHexString(params.blockTag))) return [3 /*break*/, 5];
                     return [4 /*yield*/, waitForSync(config, currentBlockNumber)];
                 case 4:
                     provider = _b.sent();
                     _b.label = 5;
                 case 5: return [2 /*return*/, provider[method](params.address, params.blockTag || "latest")];
                 case 6:
-                    if (!(params.blockTag && bytes_1.isHexString(params.blockTag))) return [3 /*break*/, 8];
+                    if (!(params.blockTag && ethers_bytes_1.isHexString(params.blockTag))) return [3 /*break*/, 8];
                     return [4 /*yield*/, waitForSync(config, currentBlockNumber)];
                 case 7:
                     provider = _b.sent();
                     _b.label = 8;
                 case 8: return [2 /*return*/, provider.getStorageAt(params.address, params.position, params.blockTag || "latest")];
                 case 9:
-                    if (!(params.blockTag && bytes_1.isHexString(params.blockTag))) return [3 /*break*/, 11];
+                    if (!(params.blockTag && ethers_bytes_1.isHexString(params.blockTag))) return [3 /*break*/, 11];
                     return [4 /*yield*/, waitForSync(config, currentBlockNumber)];
                 case 10:
                     provider = _b.sent();
                     _b.label = 11;
                 case 11: return [2 /*return*/, provider[(params.includeTransactions ? "getBlockWithTransactions" : "getBlock")](params.blockTag || params.blockHash)];
                 case 12:
-                    if (!(params.blockTag && bytes_1.isHexString(params.blockTag))) return [3 /*break*/, 14];
+                    if (!(params.blockTag && ethers_bytes_1.isHexString(params.blockTag))) return [3 /*break*/, 14];
                     return [4 /*yield*/, waitForSync(config, currentBlockNumber)];
                 case 13:
                     provider = _b.sent();
@@ -384,7 +384,7 @@ function getRunner(config, currentBlockNumber, method, params) {
                 case 15: return [2 /*return*/, provider[method](params.transactionHash)];
                 case 16:
                     filter = params.filter;
-                    if (!((filter.fromBlock && bytes_1.isHexString(filter.fromBlock)) || (filter.toBlock && bytes_1.isHexString(filter.toBlock)))) return [3 /*break*/, 18];
+                    if (!((filter.fromBlock && ethers_bytes_1.isHexString(filter.fromBlock)) || (filter.toBlock && ethers_bytes_1.isHexString(filter.toBlock)))) return [3 /*break*/, 18];
                     return [4 /*yield*/, waitForSync(config, currentBlockNumber)];
                 case 17:
                     provider = _b.sent();

@@ -49,7 +49,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var bytes_1 = require("@alayanetwork/ethers-bytes");
+var ethers_bytes_1 = require("@alayanetwork/ethers-bytes");
 var properties_1 = require("@ethersproject/properties");
 var web_1 = require("@ethersproject/web");
 var logger_1 = require("@ethersproject/logger");
@@ -63,9 +63,9 @@ function getTransactionString(transaction) {
         if (transaction[key] == null) {
             continue;
         }
-        var value = bytes_1.hexlify(transaction[key]);
+        var value = ethers_bytes_1.hexlify(transaction[key]);
         if ({ gasLimit: true, gasPrice: true, nonce: true, value: true }[key]) {
-            value = bytes_1.hexValue(value);
+            value = ethers_bytes_1.hexValue(value);
         }
         result.push(key + "=" + value);
     }
