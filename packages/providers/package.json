@@ -1,8 +1,8 @@
 {
   "author": "Richard Moore <me@ricmoo.com>",
   "browser": {
-    "./lib/ipc-provider": "./lib/browser-ipc-provider.js",
-    "net": "./lib/browser-net.js",
+    "./lib.esm/ipc-provider": "./lib.esm/browser-ipc-provider.js",
+    "net": "./lib.esm/browser-net.js",
     "ws": "./lib/browser-ws.js"
   },
   "browser.esm": {
@@ -16,6 +16,8 @@
     "ws": "./lib/browser-ws.js"
   },
   "dependencies": {
+    "@alayanetwork/ethers-address": "^5.0.0",
+    "@alayanetwork/ethers-bytes": "^5.0.0",
     "@ethersproject/abstract-provider": "^5.0.0",
     "@ethersproject/abstract-signer": "^5.0.0",
     "@ethersproject/bignumber": "^5.0.0",
@@ -29,8 +31,6 @@
     "@ethersproject/strings": "^5.0.0",
     "@ethersproject/transactions": "^5.0.0",
     "@ethersproject/web": "^5.0.0",
-    "@alayanetwork/ethers-address": "^5.0.0",
-    "@alayanetwork/ethers-bytes": "^5.0.0",
     "ws": "7.2.3"
   },
   "description": "Ethereum Providers for ethers.",

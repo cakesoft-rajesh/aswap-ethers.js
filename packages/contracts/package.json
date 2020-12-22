@@ -1,15 +1,15 @@
 {
   "author": "Richard Moore <me@ricmoo.com>",
   "dependencies": {
+    "@alayanetwork/ethers-abi": "^5.0.1",
+    "@alayanetwork/ethers-address": "^5.0.0",
     "@ethersproject/abstract-provider": "^5.0.0",
     "@ethersproject/abstract-signer": "^5.0.0",
     "@ethersproject/bignumber": "^5.0.0",
     "@ethersproject/bytes": "^5.0.0",
     "@ethersproject/constants": "^5.0.0",
     "@ethersproject/logger": "^5.0.0",
-    "@ethersproject/properties": "^5.0.0",
-    "@alayanetwork/ethers-abi": "^5.0.1",
-    "@alayanetwork/ethers-address": "^5.0.0"
+    "@ethersproject/properties": "^5.0.0"
   },
   "description": "Contract abstraction meta-class for ethers.",
   "ethereum": "donations.ethers.eth",
