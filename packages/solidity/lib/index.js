@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var bignumber_1 = require("@ethersproject/bignumber");
-var bytes_1 = require("@alayanetwork/ethers-bytes");
+var ethers_bytes_1 = require("@alayanetwork/ethers-bytes");
 var keccak256_1 = require("@ethersproject/keccak256");
 var sha2_1 = require("@ethersproject/sha2");
 var strings_1 = require("@ethersproject/strings");
@@ -13,19 +13,19 @@ function _pack(type, value, isArray) {
     switch (type) {
         case "address":
             if (isArray) {
-                return bytes_1.zeroPad(value, 32);
+                return ethers_bytes_1.zeroPad(value, 32);
             }
-            return bytes_1.arrayify(value);
+            return ethers_bytes_1.arrayify(value);
         case "string":
             return strings_1.toUtf8Bytes(value);
         case "bytes":
-            return bytes_1.arrayify(value);
+            return ethers_bytes_1.arrayify(value);
         case "bool":
             value = (value ? "0x01" : "0x00");
             if (isArray) {
-                return bytes_1.zeroPad(value, 32);
+                return ethers_bytes_1.zeroPad(value, 32);
             }
-            return bytes_1.arrayify(value);
+            return ethers_bytes_1.arrayify(value);
     }
     var match = type.match(regexNumber);
     if (match) {
@@ -38,7 +38,7 @@ function _pack(type, value, isArray) {
             size = 256;
         }
         value = bignumber_1.BigNumber.from(value).toTwos(size);
-        return bytes_1.zeroPad(value, size / 8);
+        return ethers_bytes_1.zeroPad(value, size / 8);
     }
     match = type.match(regexBytes);
     if (match) {
@@ -46,11 +46,11 @@ function _pack(type, value, isArray) {
         if (String(size) != match[1] || size === 0 || size > 32) {
             throw new Error("invalid number type - " + type);
         }
-        if (bytes_1.arrayify(value).byteLength !== size) {
+        if (ethers_bytes_1.arrayify(value).byteLength !== size) {
             throw new Error("invalid value for " + type);
         }
         if (isArray) {
-            return bytes_1.arrayify((value + Zeros).substring(0, 66));
+            return ethers_bytes_1.arrayify((value + Zeros).substring(0, 66));
         }
         return value;
     }
@@ -65,7 +65,7 @@ function _pack(type, value, isArray) {
         value.forEach(function (value) {
             result_1.push(_pack(baseType_1, value, true));
         });
-        return bytes_1.concat(result_1);
+        return ethers_bytes_1.concat(result_1);
     }
     throw new Error("unknown type - " + type);
 }
@@ -78,7 +78,7 @@ function pack(types, values) {
     types.forEach(function (type, index) {
         tight.push(_pack(type, values[index]));
     });
-    return bytes_1.hexlify(bytes_1.concat(tight));
+    return ethers_bytes_1.hexlify(ethers_bytes_1.concat(tight));
 }
 exports.pack = pack;
 function keccak256(types, values) {
